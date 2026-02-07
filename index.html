@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background: #fff;
+      color: #ff5e78;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .letter {
+      display: none;
+      background: #fff;
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: left;
+      color: #444;
+      line-height: 1.6;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .letter {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+  <source src="iris-instrumental.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+  <h1>Happy Birthday 🎉❤️</h1>
+  <p class="subtitle">I made something special just for you</p>
+
+  <button onclick="showLetter()">Open My Letter 💌</button>
+
+  <div class="letter" id="letter">
+    <p>
+      Sometimes I pause and think about us, and honestly, I still can’t believe how we ended up here.
+      What started so simply turned into something I now treasure every single day.
+      I feel like I'm the luckiest person in world to have someone like you.
+      You're the best thing that life has given me and I know nothing can take your place in my heart.
+      The love I have for you is pure and eternal!
+    </p>
+
+    <p>
+      You bring so much joy into my life that is very hard for me to imagine a life without you.
+      Thank you for becoming part of my routine, my comfort, and my peace.
+      You're my first thought every morning.
+      You make me feel seen and understood.
+      With you, I learned how to be soft without fear.
+    </p>
+
+    <p>
+      Every time that we're together I feel at peace because you're my home and my safe place.
+      You make my heart feel calm, and that’s something I’ll always be grateful for.
+      I want you to know how proud I am of you.
+      Please don’t pressure yourself too much, because doing your best is already more than enough.
+    </p>
+
+    <p>
+      I see your efforts, your struggles, and your growth, and I’m proud of all of it. Always.
+      Thank you for your patience with me, for understanding me.
+      Salamat kay bisag usahay lisod ko sabton, imo jud ko gi sabot.
+      You always make me feel secure, and I’ll never take that for granted.
+    </p>
+
+    <p>
+      Even if misunderstandings come, even if life gets heavy sometimes,
+      always remember this di na hinongdan para kapoyon ko nimo.
+      It’s always you. I will always choose you, choose us, every day.
+    </p>
+
+    <p>
+      I love you so much, more than I can fully explain.
+      And I’ll keep choosing you, again and again.
+      Wherever life takes us, I hope we walk that path together,
+      hand in hand, heart to heart.
+      My heart chose you, and it keeps choosing you.
+    </p>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  const music = document.getElementById('bgMusic');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let confettiPieces = [];
+
+  function randomColor() {
+    const colors = ['#ff5e78', '#ffd166', '#06d6a0', '#4d96ff', '#f72585'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function createConfetti() {
+    for (let i = 0; i < 150; i++) {
+      confettiPieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 50,
+        color: randomColor(),
+      });
+    }
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiPieces.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      p.y += 3;
+
+      if (p.y > canvas.height) {
+        confettiPieces[i].y = -10;
+      }
+    });
+    requestAnimationFrame(drawConfetti);
+  }
+
+  function showLetter() {
+    document.getElementById('letter').style.display = 'block';
+    music.play(); // 🎵 starts music on button click
+    createConfetti();
+    drawConfetti();
+  }
+
+  window.onresize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+</script>
+
+</body>
+</html>
